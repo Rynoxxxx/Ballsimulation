@@ -1,39 +1,42 @@
 import GLOOP.*;
-public class Ball{    
-    protected GLKugel kugel;
-    protected GLVektor bewegung;
-    protected double radius;
+public class Randball extends Ball{
 
-    public Ball(double pX, double pY, double pZ, double pRadius){
-        kugel    = new GLKugel(pX,pY,pZ, 20);
-        bewegung = new GLVektor(0,0,0);
-        radius   = pRadius;
+    public Randball(double pX, double pY, double pZ, double pRadius){
+        super(pX,pY,pZ,pRadius);
+        kugel.setzeFarbe(0,0,1);
     }
 
-    public void bewegeDich(){
-        kugel.verschiebe(bewegung);
+    @Override
+    public void werfen(GLVektor pI) {
+        super.werfen(pI);
+
     }
 
-    public void bearbeiteHindernis(Hindernis pH){
+    @Override
+    public void bearbeiteHindernis(Hindernis pH) {
+
         double dX = Math.abs(kugel.gibX() - pH.gibPosition().x);
         double dY = Math.abs(kugel.gibY() - pH.gibPosition().y);
         double dZ = Math.abs(kugel.gibZ() - pH.gibPosition().z);
 
         double b = pH.gibBreite();
         double h = pH.gibHoehe();
-        double t = pH.gibTiefe();  
+        double t = pH.gibTiefe();
 
         if((dX < b/2+radius/2)&&(dY < h/2 +radius/2)&&(dZ < t/2 +radius/2)){
             if (2*dX/b> 2*dY/h && 2*dX/b>2*dZ/t)
                 bewegung.x = - bewegung.x;
+                bewegung.x= bewegung.x*Math.random()*2+1;
+
             if (2*dY/h>2*dX/b && 2*dY/h>2*dZ/t)
                 bewegung.y = - bewegung.y;
+                bewegung.y= bewegung.y*Math.random()*2+1;
             if (2*dZ>2*dX/b && 2*dZ/t>2*dY/h)
                 bewegung.z = - bewegung.z;
-        }     
+
+        }
     }
 
-    public void werfen(GLVektor pI){bewegung=(pI);
-    } 
-
 }
+
+
