@@ -9,6 +9,7 @@ public class Ballsimulation{
     private Ball ball;
     private Bounceball bounceball;
     private Randball randball;
+    private Gravball gravball;
     private Hindernis[] hindernis;
 
     public Ballsimulation(){
@@ -30,8 +31,13 @@ public class Ballsimulation{
         bounceball = new Bounceball(0,200,50, 20);
         bounceball.werfen(new GLVektor(1,1,0));
 
-        randball = new Randball(0,200,50, 20);
+        randball = new Randball(0,200,100, 20);
         randball.werfen(new GLVektor(1,-1,0));
+
+        gravball = new Gravball(0,200,150,20);
+
+        gravball.werfen((new GLVektor(1,Math.sin(6),0)));
+
         fuehreAus();
     }
 
@@ -41,11 +47,14 @@ public class Ballsimulation{
             ball.bewegeDich();
             bounceball.bewegeDich();
             randball.bewegeDich();
+            gravball.bewegeDich();
                 for (int j=0; j< hindernis.length; j++) {
                 ball.bearbeiteHindernis(hindernis[j]);
                 bounceball.bearbeiteHindernis(hindernis[j]);
                 randball.bearbeiteHindernis(hindernis[j]);
-            }
+                gravball.bearbeiteHindernis(hindernis[j]);
+                gravball.Farbe();
+                }
             Sys.warte();
         }
         Sys.beenden();
